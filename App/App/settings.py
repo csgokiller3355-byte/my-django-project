@@ -15,8 +15,8 @@ import os
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# Учитываем двойную вложенность App/App/
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# Указывает на корень проекта (директорию P)
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-^*_pnt2x%=3r&+v(p=hxmy05vm*kzce_$vn^z)lm*rxk5i5sm=')
 
-# Временно включаем DEBUG=True, чтобы в логах Render был виден точный traceback ошибки
+# Включаем DEBUG=True для отслеживания ошибок в логах
 DEBUG = True
 
 ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'App.home.apps.HomeConfig',
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'App.App.urls'
+ROOT_URLCONF = 'App.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'App.App.wsgi.application'
+WSGI_APPLICATION = 'App.wsgi.application'
 
 
 # Database
