@@ -1,0 +1,169 @@
+<div class="tab-pane" id="minigames">
+    <div class="max-w-6xl mx-auto space-y-8">
+        <h2 class="text-3xl font-extrabold text-gray-900 text-center">Пиксельные мини-игры & Свой код</h2>
+
+        <!-- ГЛАВНОЕ МЕНЮ АРКАДЫ (4 большие кнопки на всю горизонталь) -->
+        <div id="mainMenu" class="menu-screen space-y-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+                <button class="menu-btn h-28 px-4 bg-gradient-to-br from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold rounded-2xl shadow-lg flex items-center justify-center text-center transition transform hover:-translate-y-1 text-sm md:text-base" data-mode="1">
+                    Дуэль (Медленные пули, 4 выстрела)
+                </button>
+                <button class="menu-btn h-28 px-4 bg-gradient-to-br from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold rounded-2xl shadow-lg flex items-center justify-center text-center transition transform hover:-translate-y-1 text-sm md:text-base" data-mode="2">
+                    2. Реакция по центру
+                </button>
+                <button class="menu-btn h-28 px-4 bg-gradient-to-br from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold rounded-2xl shadow-lg flex items-center justify-center text-center transition transform hover:-translate-y-1 text-sm md:text-base" data-mode="3">
+                    3. Тир (Обратный отсчет + 10 мишеней)
+                </button>
+                <button class="menu-btn h-28 px-4 bg-gradient-to-br from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold rounded-2xl shadow-lg flex items-center justify-center text-center transition transform hover:-translate-y-1 text-sm md:text-base" data-mode="4">
+                    4. Тест комбинаций (Раздельные экраны)
+                </button>
+            </div>
+
+            <!-- БЛОК ПОЛЬЗОВАТЕЛЬСКОЙ ИГРЫ (Расположен строго ниже) -->
+            <div class="p-8 bg-[#12141c] rounded-3xl border border-white/10 shadow-2xl space-y-6 w-full">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2"><span>🎮</span> Конструктор своей игры</h3>
+                        <p class="text-gray-400 text-sm">Пишите разметку, стили и логику раздельно по вкладкам</p>
+                    </div>
+
+                    <!-- Меню-переключатель вкладок (HTML / CSS / JS) -->
+                    <div class="flex items-center bg-gray-900 p-1.5 rounded-2xl border border-gray-800 space-x-1">
+                        <button type="button" class="code-tab-btn px-5 py-2 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow" data-target="html">HTML</button>
+                        <button type="button" class="code-tab-btn px-5 py-2 rounded-xl text-xs font-bold transition text-gray-400 hover:text-white" data-target="css">CSS</button>
+                        <button type="button" class="code-tab-btn px-5 py-2 rounded-xl text-xs font-bold transition text-gray-400 hover:text-white" data-target="js">JS</button>
+                    </div>
+                </div>
+
+                <!-- Редакторы кода -->
+                <div class="relative">
+                    <div class="code-pane" id="pane-html">
+                        <textarea id="codeHtml" rows="12" placeholder="<div id='game-box'>&#10;  <h2>Моя игра</h2>&#10;  <button id='clickBtn'>Кликни меня!</button>&#10;</div>" class="w-full p-5 rounded-2xl bg-gray-950 text-emerald-400 font-mono text-xs border border-gray-800 focus:outline-none focus:border-indigo-500 leading-relaxed"></textarea>
+                    </div>
+                    <div class="code-pane" id="pane-css" style="display: none;">
+                        <textarea id="codeCss" rows="12" placeholder="body { background: #0f172a; color: white; text-align: center; font-family: sans-serif; }&#10;#game-box { margin-top: 50px; }" class="w-full p-5 rounded-2xl bg-gray-950 text-cyan-400 font-mono text-xs border border-gray-800 focus:outline-none focus:border-indigo-500 leading-relaxed"></textarea>
+                    </div>
+                    <div class="code-pane" id="pane-js" style="display: none;">
+                        <textarea id="codeJs" rows="12" placeholder="document.getElementById('clickBtn').addEventListener('click', () => {&#10;  alert('Привет!');&#10;});" class="w-full p-5 rounded-2xl bg-gray-950 text-amber-400 font-mono text-xs border border-gray-800 focus:outline-none focus:border-indigo-500 leading-relaxed"></textarea>
+                    </div>
+                </div>
+
+                <button id="runCustomGameBtn" class="w-full py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:opacity-95 text-white font-bold rounded-2xl shadow-xl transition transform active:scale-95 text-sm tracking-wide">
+                    Запустить собственный проект 🚀
+                </button>
+            </div>
+        </div>
+
+        <!-- ИГРОВОЙ ЭКРАН -->
+        <div id="gameContainer" class="game-container" style="display: none;">
+            <button class="back-btn" id="backToMenuBtn">← В главное меню</button>
+            <div class="ui" id="statusText">Игра запущена</div>
+
+            <canvas id="gameCanvas" width="800" height="500"></canvas>
+
+            <div id="customGameWrapper" style="display: none; width: 100%; height: 500px;">
+                <iframe id="customGameFrame" style="width: 100%; height: 100%; border: none; background: #000; border-radius: 12px;"></iframe>
+            </div>
+
+            <div class="hint" id="hintText">Управление</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Переключение вкладок редактора кода
+    const tabButtons = document.querySelectorAll('.code-tab-btn');
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            tabButtons.forEach(b => {
+                b.classList.remove('bg-indigo-600', 'text-white', 'shadow');
+                b.classList.add('text-gray-400');
+            });
+            this.classList.add('bg-indigo-600', 'text-white', 'shadow');
+            this.classList.remove('text-gray-400');
+
+            const target = this.getAttribute('data-target');
+            document.querySelectorAll('.code-pane').forEach(pane => {
+                pane.style.display = 'none';
+            });
+            document.getElementById('pane-' + target).style.display = 'block';
+        });
+    });
+
+    // Запуск своей игры
+    const runBtn = document.getElementById('runCustomGameBtn');
+    if (runBtn) {
+        runBtn.addEventListener('click', function() {
+            const html = document.getElementById('codeHtml').value;
+            const css = document.getElementById('codeCss').value;
+            const js = document.getElementById('codeJs').value;
+
+            if (!html.trim() && !css.trim() && !js.trim()) {
+                alert('Пожалуйста, заполните хотя бы одно поле (HTML, CSS или JS)!');
+                return;
+            }
+
+            const fullCode = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <style>${css}</style>
+                </head>
+                <body>
+                    ${html}
+                    <script>${js}<\/script>
+                </body>
+                </html>
+            `;
+
+            const mainMenu = document.getElementById('mainMenu');
+            const gameContainer = document.getElementById('gameContainer');
+            const canvas = document.getElementById('gameCanvas');
+            const wrapper = document.getElementById('customGameWrapper');
+            const statusText = document.getElementById('statusText');
+            const hintText = document.getElementById('hintText');
+
+            if (mainMenu) mainMenu.style.display = 'none';
+            if (gameContainer) gameContainer.style.display = 'block';
+
+            if (canvas) canvas.style.display = 'none';
+            if (wrapper) wrapper.style.display = 'block';
+
+            if (statusText) statusText.innerText = 'Пользовательская песочница (HTML / CSS / JS)';
+            if (hintText) hintText.innerText = 'Ваш собственный проект успешно скомпилирован во фрейме.';
+
+            const iframe = document.getElementById('customGameFrame');
+            if (iframe) {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                doc.open();
+                doc.write(fullCode);
+                doc.close();
+            }
+        });
+    }
+
+    // Возврат в меню
+    const backBtn = document.getElementById('backToMenuBtn');
+    if (backBtn) {
+        backBtn.addEventListener('click', function() {
+            const mainMenu = document.getElementById('mainMenu');
+            const gameContainer = document.getElementById('gameContainer');
+            const canvas = document.getElementById('gameCanvas');
+            const wrapper = document.getElementById('customGameWrapper');
+            const iframe = document.getElementById('customGameFrame');
+
+            if (iframe) {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                doc.open();
+                doc.write('');
+                doc.close();
+            }
+
+            if (wrapper) wrapper.style.display = 'none';
+            if (canvas) canvas.style.display = 'block';
+            if (gameContainer) gameContainer.style.display = 'none';
+            if (mainMenu) mainMenu.style.display = 'block';
+        });
+    }
+</script>

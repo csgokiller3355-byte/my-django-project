@@ -1,0 +1,42 @@
+<div class="tab-pane" id="homework">
+    <div class="homework-section">
+        <h2>Домашние задания</h2>
+
+        <!-- Кнопки-переключатели (фильтры) -->
+        <div class="hw-tabs">
+            <button class="hw-tab-btn active" data-filter="checking">На проверке (1)</button>
+            <button class="hw-tab-btn" data-filter="graded">Оцененные (12)</button>
+            <button class="hw-tab-btn" data-filter="process">В процессе (2)</button>
+        </div>
+
+        <!-- Список блоков заданий -->
+        <div class="hw-list">
+            <!-- Пример задания 1: На проверке -->
+            <div class="hw-card" data-category="checking">
+                <div class="hw-title">Парсер Telegram-бота на Aiogram</div>
+                <div class="hw-details">
+                    <span class="hw-status checking">Статус: На проверке</span>
+                    <span class="hw-date">Сдано: вчера, 18:40</span>
+                </div>
+            </div>
+
+            <!-- Пример задания 2: Оцененное (скрыто по умолчанию) -->
+            <div class="hw-card" data-category="graded" style="display: none;">
+                <div class="hw-title">API интернет-магазина на Django REST</div>
+                <div class="hw-details">
+                    <span class="hw-status graded">Оценка: 5/5</span>
+                    <span class="hw-date">Проверено: 3 дня назад</span>
+                </div>
+            </div>
+
+            <!-- Пример задания 3: В процессе (скрыто по умолчанию) -->
+            <div class="hw-card" data-category="process" style="display: none;">
+                <div class="hw-title">База данных PostgreSQL для CRM</div>
+                <div class="hw-details">
+                    <span class="hw-status process">Статус: В процессе</span>
+                    <span class="hw-date">Дедлайн: завтра</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
