@@ -22,3 +22,5 @@ staticfiles/
 
 # Логи работы
 *.log
+
+gunicorn
